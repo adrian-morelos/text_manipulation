@@ -1,0 +1,108 @@
+<?php
+
+/**
+ * @file
+ * @defgroup text_manipulation: Text Manipulation Field Formatters.
+ *
+ * The text_manipulation module define field formatters that can only be used
+ * on text fields.
+ */
+
+/**
+ * @file
+ * Main file for the text_manipulation module, Text Manipulation Field
+ *   Formatters.
+ *
+ * @ingroup text_manipulation
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Component\Utility\Unicode;
+
+/**
+ * Implements hook_help().
+ */
+function text_manipulation_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the text_manipulation module.
+    case 'help.page.text_manipulation':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Define a module that define field formatters that can only be used on text fields. These silly field formatters will allow the site builder to choose from one of several ways to manipulate the text field’s values before outputting the text on the page.') . '</p>';
+      return $output;
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function text_manipulation_theme() {
+  return [
+    'text_tooltip' => [
+      'render element' => 'element',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for file form widget templates.
+ *
+ * Default template: text-tooltip.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: A render element representing the file.
+ */
+function template_preprocess_text_tooltip(&$variables) {
+  $element = $variables['element'];
+  $variables['attributes'] = [];
+  if (isset($element['#id'])) {
+    $variables['attributes']['id'] = $element['#id'];
+  }
+  if (!empty($element['#attributes']['class'])) {
+    $variables['attributes']['class'] = (array) $element['#attributes']['class'];
+  }
+  if (isset($element['#text'])) {
+    $variables['text'] = $element['#text'];
+  }
+  if (isset($element['#format'])) {
+    $variables['format'] = $element['#format'];
+  }
+  if (isset($element['#langcode'])) {
+    $variables['langcode'] = $element['#langcode'];
+  }
+}
+
+/**
+ * Generates a Rot13 formatted version of a text field value.
+ *
+ * @param $text
+ *   The content for which a ROT13 will be generated.
+ *
+ * @return
+ *   The generated ROT13 version of the given string
+ */
+function text_rot13($text) {
+  if (Unicode::strlen($text) <= 0) {
+    return $text;
+  }
+  $rot13_version = [];
+  for ($i = 0; $i < strlen($text); $i++) {
+    $c = ord($text[$i]);
+
+    if ($c >= ord('n') & $c <= ord('z') | $c >= ord('N') & $c <= ord('Z')) {
+      $c -= 13;
+    }
+    elseif ($c >= ord('a') & $c <= ord('m') | $c >= ord('A') & $c <= ord('M')) {
+      $c += 13;
+    }
+    $rot13_version[$i] = chr($c);
+  }
+
+  if (!empty($rot13_version)) {
+    $rot13_version = implode($rot13_version);
+  }
+
+  return $rot13_version;
+}

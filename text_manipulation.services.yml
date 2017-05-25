@@ -1,0 +1,5 @@
+services:
+  text_manipulation.slugify_generator:
+    class: Drupal\text_manipulation\SlugifyGenerator
+    tags:
+      - { name: slugify_generator }

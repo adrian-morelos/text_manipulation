@@ -1,0 +1,16 @@
+{
+  "name": "drupal/text_manipulation",
+  "type": "drupal-module",
+  "description": "Define a module that define field formatters that can only be used on text fields. ",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/text_manipulation",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "http://drupal.org/project/issues/text_manipulation",
+    "source": "http://cgit.drupalcode.org/text_manipulation"
+  },
+  "require": {
+    "cocur/slugify": "dev-master"
+  }
+}

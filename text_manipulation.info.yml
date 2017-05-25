@@ -1,0 +1,7 @@
+name: Text Manipulation Field Formatters.
+type: module
+description: Text Manipulation Field Formatters, Define a module that define field formatters that can only be used on text fields.
+core: 8.x
+package: Field formatter
+dependencies:
+  - drupal:text
